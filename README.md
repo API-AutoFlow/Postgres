@@ -1,8 +1,10 @@
+
+
+# Summary
+Integration with postgres can be used to store data from Api’s, as well as retrieving data from databases.
+
 # API AutoFlow Version:
 Configuration config.json was created using AutoFlow version __0.2.5__
-
-# Postgres
-Integration with postgres can be used to store data from Api’s, as well as retrieving data from databases.
 
 # Storing data:
 
