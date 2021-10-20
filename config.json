@@ -1,1 +1,175 @@
-{"Data":[],"File":[],"Flow":[],"FlowTest":[],"Inbound":[{"id":"<1598157742583978000.0.3284699661.1334312961.69541>","value":{"name":"http server","port":1111,"tls":false,"type":"http server"}}],"InboundEndpoint":[{"id":"<1598157742583981000.0.3284699661.1334312961.69542>","index":[null],"value":{"default-test":null,"method":"GET","name":"endpoint","path":"/api/user/info","type":"endpoint"}},{"id":"<1598157742583984000.0.3284699661.1334312961.69544>","index":[null],"value":{"default-test":null,"method":"GET","name":"endpoint","path":"/api/user/info","type":"endpoint"}},{"id":"<1598157742583986000.0.3284699661.1334312961.69545>","index":[null],"value":{"default-test":null,"method":"GET","name":"endpoint","path":"/api/user/info","type":"endpoint"}},{"id":"<1598157742583982000.0.3284699661.1334312961.69543>","index":["<1598157742583978000.0.3284699661.1334312961.69541>"],"value":{"default-test":"<1598157742583998000.0.3284699661.1334312961.69551>","method":"GET","name":"endpoint","path":"/postgres","serve-files":null,"type":"endpoint"}}],"InboundEndpointFlow":[{"id":"<1598157742583981000.0.3284699661.1334312961.69542>","index":[null],"value":[{"$action":"communication/http-request","body":"","header":{},"method":"GET","query":{},"response-target":{"__LDATA__":["result"]},"url":"http://192.168.50.194:1111/service1"},{"$action":"data/set","target":{"__LDATA__":["response","body"]},"value":"ABC"}]},{"id":"<1598157742583984000.0.3284699661.1334312961.69544>","index":[null],"value":[{"$action":"communication/http-request","body":"","header":{},"method":"GET","query":{},"response-target":{"__LDATA__":["result"]},"url":"http://192.168.50.194:1111/service1"},{"$action":"data/set","target":{"__LDATA__":["response","body"]},"value":"ABC"}]},{"id":"<1598157742583986000.0.3284699661.1334312961.69545>","index":[null],"value":[{"$action":"communication/http-request","body":"","header":{},"method":"GET","query":{},"response-target":{"__LDATA__":["result"]},"url":"http://192.168.50.194:1111/service1"},{"$action":"data/set","target":{"__LDATA__":["response","body"]},"value":"ABC"}]},{"id":null,"index":[null],"value":[{"$action":"array/chunk","array":{"__LDATA__":[]},"count":0,"leftover":[],"output-location":{"__LDATA__":[]},"step":0}]},{"id":"<1598157742583982000.0.3284699661.1334312961.69543>","index":["<1598157742583978000.0.3284699661.1334312961.69541>"],"value":[{"$action":"communication/http-request","body":{"__LDATA__":["request","body"]},"header":{"Content-type":"application/json"},"method":"GET","mock-result":{"body":"","headers":{},"status-code":200},"output-location":{"__LDATA__":["result"]},"query":{},"timeout":5000,"url":"https://postman-echo.com/get?foo1=bar1&foo2=bar2","use-mock-result":false},{"$action":"json/decode","json":{"__LDATA__":["result","body"]},"output-location":{"__LDATA__":["result-decoded"]}},{"$action":"string/join","array":["INSERT INTO table_name (column_list) VALUES (",{"__LDATA__":["result-decoded","args","foo1"]},"), (",{"__LDATA__":["result-decoded","args","foo2"]},");"],"output-location":{"__LDATA__":["query"]},"separator":""},{"$action":"database/postgres/query","address":"192.168.1.200","database":"database_name","format":"processed","mock-result":{"columns":["column1","column2"],"num_rows":2,"rows":[["col1_val1","col2_val1"],["col1_val2","col2_val2"]]},"output-location":{"__LDATA__":["response","body"]},"password":"","port":5432,"query":{"__LDATA__":["query"]},"use-mock-result":false,"username":"database_username"}]}],"InboundEndpointTest":[{"id":"<1598157742583998000.0.3284699661.1334312961.69551>","index":["<1598157742583978000.0.3284699661.1334312961.69541>","<1598157742583982000.0.3284699661.1334312961.69543>"],"value":{"name":"default-test-input","request":{"body":"","header":{},"path":{},"query":{}}}}],"Schema":[],"SchemaEntry":[],"Timer":[],"TimerFlow":[],"Variable":[]}
+{
+  "$product": {
+    "deployment_mode": "SOLO",
+    "name": "API AutoFlow",
+    "version": "2.1.16"
+  },
+  "Flow": [
+    {
+      "default-test": "<1598157742583998000.0.3284699661.1334312961.69551>",
+      "flow": [
+        {
+          "$action": "communication/http-request",
+          "body": {
+            "__LDATA__": [
+              "request",
+              "body"
+            ]
+          },
+          "header": {
+            "Content-type": "application/json"
+          },
+          "method": "GET",
+          "mock-result": {
+            "body": "",
+            "headers": {},
+            "status-code": 200
+          },
+          "output-location": {
+            "__LDATA__": [
+              "result"
+            ]
+          },
+          "query": {},
+          "timeout": 5000,
+          "url": "https://postman-echo.com/get?foo1=bar1&foo2=bar2",
+          "use-mock-result": false
+        },
+        {
+          "$action": "json/decode",
+          "json": {
+            "__LDATA__": [
+              "result",
+              "body"
+            ]
+          },
+          "output-location": {
+            "__LDATA__": [
+              "result-decoded"
+            ]
+          }
+        },
+        {
+          "$action": "string/join",
+          "array": [
+            "INSERT INTO table_name (column_list) VALUES (",
+            {
+              "__LDATA__": [
+                "result-decoded",
+                "args",
+                "foo1"
+              ]
+            },
+            "), (",
+            {
+              "__LDATA__": [
+                "result-decoded",
+                "args",
+                "foo2"
+              ]
+            },
+            ");"
+          ],
+          "output-location": {
+            "__LDATA__": [
+              "query"
+            ]
+          },
+          "separator": ""
+        },
+        {
+          "$action": "database/postgres/query",
+          "address": "192.168.1.200",
+          "database": "database_name",
+          "format": "processed",
+          "mock-result": {
+            "columns": [
+              "column1",
+              "column2"
+            ],
+            "num_rows": 2,
+            "rows": [
+              [
+                "col1_val1",
+                "col2_val1"
+              ],
+              [
+                "col1_val2",
+                "col2_val2"
+              ]
+            ]
+          },
+          "output-location": {
+            "__LDATA__": [
+              "response",
+              "body"
+            ]
+          },
+          "password": "",
+          "port": 5432,
+          "query": {
+            "__LDATA__": [
+              "query"
+            ]
+          },
+          "use-mock-result": false,
+          "username": "database_username"
+        }
+      ],
+      "id": "29b43961-b6d0-4197-9441-66abc8ce95c6"
+    }
+  ],
+  "Inbound": [
+    {
+      "id": "<1598157742583978000.0.3284699661.1334312961.69541>",
+      "port": 1111,
+      "tls": false,
+      "type": "http server"
+    }
+  ],
+  "InboundEndpoint": [
+    {
+      "default-test": "<1598157742583998000.0.3284699661.1334312961.69551>",
+      "id": "<1598157742583982000.0.3284699661.1334312961.69543>",
+      "method": "GET",
+      "path": "/postgres",
+      "serve-files": null,
+      "type": "endpoint"
+    }
+  ],
+  "ResourceInfo": [
+    {
+      "id": "<1598157742583978000.0.3284699661.1334312961.69541>",
+      "resourceType": "Inbound",
+      "title": "http server"
+    },
+    {
+      "id": "<1598157742583998000.0.3284699661.1334312961.69551>",
+      "parentId": "29b43961-b6d0-4197-9441-66abc8ce95c6",
+      "resourceType": "Test",
+      "title": "default-test-input"
+    },
+    {
+      "id": "29b43961-b6d0-4197-9441-66abc8ce95c6",
+      "parentId": "<1598157742583982000.0.3284699661.1334312961.69543>",
+      "resourceType": "Flow"
+    },
+    {
+      "id": "<1598157742583982000.0.3284699661.1334312961.69543>",
+      "parentId": "<1598157742583978000.0.3284699661.1334312961.69541>",
+      "resourceType": "InboundEndpoint",
+      "title": "endpoint"
+    }
+  ],
+  "Test": [
+    {
+      "id": "<1598157742583998000.0.3284699661.1334312961.69551>",
+      "value": {
+        "body": "",
+        "header": {},
+        "path": {},
+        "query": {}
+      }
+    }
+  ]
+}
