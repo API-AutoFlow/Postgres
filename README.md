@@ -7,7 +7,7 @@ Integration with postgres can be used to store data from Api’s, as well as ret
 Configuration config.json was created using AutoFlow version __0.2.5__
 
 # Need help?
-Is you have questions about this example, feel free to post your question on the community "<a href="https://interactor.com/autoflow/questions" target="_blank">Ask Questions</a>" website.
+Is you have questions about this example, feel free to post your question on the community "<a href="https://www.interactor.com/support/forum" target="_blank">Ask Questions</a>" website.
 
 # Storing data:
 
